@@ -48,6 +48,11 @@ enum CookieType: Int {
   var highlightedSpriteName: String {
     return spriteName + "-Highlighted"
   }
+  
+  static func random() -> CookieType {
+    let aValue = arc4random_uniform(6) + 1
+    return CookieType(rawValue: Int(aValue))!
+  }
 }
 
 class Cookie {
