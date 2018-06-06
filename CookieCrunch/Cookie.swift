@@ -34,6 +34,7 @@ enum CookieType: Int {
   var spriteName: String {
     let names = [
       "Unknown",
+      
       "Croissant",
       "Cupcake",
       "Danish",
@@ -57,7 +58,7 @@ enum CookieType: Int {
 
 class Cookie: Hashable {
   var column: Int
-  var row: Int
+  var row   : Int
   
   let type: CookieType
   
