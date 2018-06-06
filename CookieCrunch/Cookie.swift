@@ -30,6 +30,20 @@ import Foundation
 
 enum CookieType: Int {
   case unknown = 0, croissant, cupcake, danish, donut, macaroon, sugarCookie
+  
+  var spriteName: String {
+    let names = [
+      "Unknown",
+      "Croissant",
+      "Cupcake",
+      "Danish",
+      "Donut",
+      "Macaroon",
+      "SugarCookie",
+    ]
+    
+    return names[rawValue]
+  }
 }
 
 class Cookie {
