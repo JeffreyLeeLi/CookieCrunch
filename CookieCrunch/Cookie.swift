@@ -55,7 +55,7 @@ enum CookieType: Int {
   }
 }
 
-class Cookie {
+class Cookie: Hashable {
   var column: Int
   var row: Int
   
@@ -66,5 +66,13 @@ class Cookie {
     self.row = row
     
     self.type = type
+  }
+  
+  var hashValue: Int {
+    return self.row*9 + self.column
+  }
+  
+  static func ==(one: Cookie, another: Cookie) -> Bool {
+    return (one.column == another.column) && (one.row == another.row)
   }
 }
