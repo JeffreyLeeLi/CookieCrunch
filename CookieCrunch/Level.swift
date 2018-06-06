@@ -33,4 +33,8 @@ let numRows = 9
 
 class Level {
   private var cookies = Array2D<Cookie>(columns: numColumns, rows: numRows)
+  
+  func cookieAt(column: Int, row: Int) -> Cookie? {
+    return self.cookies[column, row]
+  }
 }
