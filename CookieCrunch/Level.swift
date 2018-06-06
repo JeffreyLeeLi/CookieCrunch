@@ -34,6 +34,22 @@ let numRows = 9
 class Level {
   private var cookies = Array2D<Cookie>(columns: numColumns, rows: numRows)
   
+  func shuffle() -> Set<Cookie> {
+    var aSet: Set<Cookie> = []
+    
+    for column in 0..<numColumns {
+      for row in 0..<numRows {
+        let type = CookieType.random()
+        let cookie = Cookie(column: column, row: row, type: type)
+        
+        self.cookies[column, row] = cookie
+        aSet.insert(cookie)
+      }
+    }
+    
+    return aSet
+  }
+  
   func cookieAt(column: Int, row: Int) -> Cookie? {
     precondition(0 <= column && column < numColumns)
     precondition(0 <= row && row < numRows)
