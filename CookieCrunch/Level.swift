@@ -35,6 +35,9 @@ class Level {
   private var cookies = Array2D<Cookie>(columns: numColumns, rows: numRows)
   
   func cookieAt(column: Int, row: Int) -> Cookie? {
+    precondition(0 <= column && column < numColumns)
+    precondition(0 <= row && row < numRows)
+    
     return self.cookies[column, row]
   }
 }
