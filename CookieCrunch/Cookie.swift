@@ -28,6 +28,10 @@
 
 import Foundation
 
+enum CookieType: Int {
+  case unknown = 0, croissant, cupcake, danish, donut, macaroon, sugarCookie
+}
+
 class Cookie {
   var column: Int
   var row: Int
