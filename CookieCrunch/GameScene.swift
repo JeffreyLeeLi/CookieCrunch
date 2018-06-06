@@ -62,6 +62,12 @@ class GameScene: SKScene {
     background.size = size
     addChild(background)
     
+    self.addChild(self.gameLayer)
+    
+    let position = CGPoint(x: -self.tileWidth*CGFloat(numColumns)/2.0, y: -self.tileHeight*CGFloat(numRows)/2.0)
+    self.cookieLayer.position = position
+    
+    self.gameLayer.addChild(self.cookieLayer)
   }
   
 }
