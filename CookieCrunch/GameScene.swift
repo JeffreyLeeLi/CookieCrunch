@@ -41,6 +41,14 @@ class GameScene: SKScene {
   let fallingCookieSound = SKAction.playSoundFileNamed("Scrape.wav", waitForCompletion: false)
   let addCookieSound = SKAction.playSoundFileNamed("Drip.wav", waitForCompletion: false)
   
+  var level: Level!
+  
+  let tileWidth : CGFloat = 32.0
+  let tileHeight: CGFloat = 36.0
+  
+  let gameLayer   = SKNode()
+  let cookieLayer = SKNode()
+  
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder) is not used in this app")
   }
