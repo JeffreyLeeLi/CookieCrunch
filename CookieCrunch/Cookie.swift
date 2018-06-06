@@ -36,8 +36,12 @@ class Cookie {
   var column: Int
   var row: Int
   
-  init(column: Int, row: Int) {
+  let type: CookieType
+  
+  init(column: Int, row: Int, type: CookieType) {
     self.column = column
     self.row = row
+    
+    self.type = type
   }
 }
