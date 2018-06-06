@@ -27,3 +27,10 @@
 /// THE SOFTWARE.
 
 import Foundation
+
+let numColumns = 9
+let numRows = 9
+
+class Level {
+  private var cookies = Array2D<Cookie>(columns: numColumns, rows: numRows)
+}
