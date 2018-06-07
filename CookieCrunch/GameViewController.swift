@@ -44,6 +44,8 @@ class GameViewController: UIViewController {
   var movesLeft = 0
   var score = 0
   
+  var level: Level!
+  
   lazy var backgroundMusic: AVAudioPlayer? = {
     guard let url = Bundle.main.url(forResource: "Mining by Moonlight", withExtension: "mp3") else {
       return nil
@@ -77,6 +79,10 @@ class GameViewController: UIViewController {
     
     // Present the scene.
     skView.presentScene(scene)
+    
+    self.level = Level()
+    
+    self.beginGame()
   }
   
   // MARK: IBActions
@@ -97,4 +103,8 @@ class GameViewController: UIViewController {
     return [.portrait, .portraitUpsideDown]
   }
   
+  func beginGame() {
+    let cookies = self.level.shuffle()
+    self.scene.addSprites(for: cookies)
+  }
 }
