@@ -35,6 +35,25 @@ class Level {
   private var tiles = Array2D<Tile>(columns: numColumns, rows: numRows)
   private var cookies = Array2D<Cookie>(columns: numColumns, rows: numRows)
   
+  init(filename: String) {
+    guard let data = LevelData.loadFrom(file: filename) else {
+      return
+    }
+    
+    let tileArray = data.tiles
+    for (i, array) in tileArray.enumerated() {
+      let row = numRows-i-1
+      
+      for (j, value) in array.enumerated() {
+        let column = j
+        
+        if value == 1 {
+          self.tiles[column, row] = Tile()
+        }
+      }
+    }
+  }
+  
   func shuffle() -> Set<Cookie> {
     var aSet: Set<Cookie> = []
     
