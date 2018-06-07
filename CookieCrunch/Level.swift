@@ -59,6 +59,10 @@ class Level {
     
     for column in 0..<numColumns {
       for row in 0..<numRows {
+        if self.tiles[column, row] == nil {
+          continue
+        }
+        
         let type = CookieType.random()
         let cookie = Cookie(column: column, row: row, type: type)
         
