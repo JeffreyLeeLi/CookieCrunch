@@ -106,5 +106,7 @@ class GameViewController: UIViewController {
   func beginGame() {
     let cookies = self.level.shuffle()
     self.scene.addSprites(for: cookies)
+    
+    self.scene.addTiles()
   }
 }

@@ -49,6 +49,10 @@ class GameScene: SKScene {
   let gameLayer   = SKNode()
   let cookieLayer = SKNode()
   
+  let tileLayer = SKNode()
+  let maskLayer = SKNode()
+  let cropLayer = SKCropNode()
+  
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder) is not used in this app")
   }
@@ -65,9 +69,60 @@ class GameScene: SKScene {
     self.addChild(self.gameLayer)
     
     let position = CGPoint(x: -self.tileWidth*CGFloat(numColumns)/2.0, y: -self.tileHeight*CGFloat(numRows)/2.0)
-    self.cookieLayer.position = position
     
-    self.gameLayer.addChild(self.cookieLayer)
+    self.tileLayer.position = position
+    self.gameLayer.addChild(self.tileLayer)
+    
+    self.maskLayer.position = position
+    self.gameLayer.addChild(self.cropLayer)
+    
+    self.cookieLayer.position = position
+    self.cropLayer.addChild(self.cookieLayer)
+    
+    self.cropLayer.maskNode = self.maskLayer
+  }
+  
+  func addTiles() {
+    for column in 0..<numColumns {
+      for row in 0..<numRows {
+        if self.level.tileAt(column: column, row: row) == nil {
+          continue
+        }
+        
+        let sprite = SKSpriteNode(imageNamed: "MaskTile")
+        
+        sprite.size = CGSize(width: self.tileWidth, height: self.tileHeight)
+        sprite.position = positionForCookieAt(column: column, row: row)
+        
+        self.maskLayer.addChild(sprite)
+      }
+    }
+    
+    for column in 0...numColumns {
+      for row in 0...numRows {
+        let tl = (column > 0) && (row < numRows) && self.level.tileAt(column: column-1, row: row) != nil
+        let bl = (column > 0) && (row > 0) && self.level.tileAt(column: column-1, row: row-1) != nil
+        let tr = (column < numColumns) && (row < numRows) && self.level.tileAt(column: column, row: row) != nil
+        let br = (column < numColumns) && (row > 0) && self.level.tileAt(column: column, row: row-1) != nil
+        
+        var value = 0
+        
+        value = value | tl.hashValue << 0
+        value = value | tr.hashValue << 1
+        value = value | bl.hashValue << 2
+        value = value | br.hashValue << 3
+        
+        if value != 0 && value != 6 && value != 9 {
+          let name = String(format: "Tile_%ld", value)
+          let sprite = SKSpriteNode(imageNamed: name)
+          
+          sprite.size = CGSize(width: self.tileWidth, height: self.tileHeight)
+          sprite.position = self.positionForTileAt(column: column, row: row)
+          
+          self.tileLayer.addChild(sprite)
+        }
+      }
+    }
   }
   
   func addSprites(for cookies : Set<Cookie>) {
@@ -79,6 +134,10 @@ class GameScene: SKScene {
       
       self.cookieLayer.addChild(sprite)
     }
+  }
+  
+  private func positionForTileAt(column: Int, row: Int) -> CGPoint {
+    return CGPoint(x: CGFloat(column)*self.tileWidth, y: CGFloat(row)*self.tileHeight)
   }
   
   private func positionForCookieAt(column: Int, row: Int) -> CGPoint {
