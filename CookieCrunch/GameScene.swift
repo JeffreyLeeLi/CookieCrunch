@@ -202,6 +202,15 @@ class GameScene: SKScene {
     self.swipeFromRow    = nil
   }
   
+  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.swipeFromColumn = nil
+    self.swipeFromRow    = nil
+  }
+  
+  override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.touchesEnded(touches, with: event)
+  }
+  
   private func positionForTileAt(column: Int, row: Int) -> CGPoint {
     return CGPoint(x: CGFloat(column)*self.tileWidth, y: CGFloat(row)*self.tileHeight)
   }
