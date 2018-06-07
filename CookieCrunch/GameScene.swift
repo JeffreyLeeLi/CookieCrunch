@@ -159,12 +159,76 @@ class GameScene: SKScene {
     self.swipeFromRow    = row
   }
   
+  override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    guard self.swipeFromColumn != nil else {
+      return
+    }
+    
+    guard self.swipeFromRow != nil else {
+      return
+    }
+    
+    guard let touch = touches.first else {
+      return
+    }
+    
+    let location = touch.location(in: self.cookieLayer)
+    let (success, column, row) = self.convertPoint(point: location)
+    
+    if !success {
+      return
+    }
+    
+    var horizontalDelta = 0
+    var verticalDelta   = 0
+    
+    if column < self.swipeFromColumn! {
+      horizontalDelta = -1
+    } else if column > self.swipeFromColumn! {
+      horizontalDelta = 1
+    } else if row < self.swipeFromRow! {
+      verticalDelta = -1
+    } else if row > self.swipeFromRow! {
+      verticalDelta = 1
+    }
+    
+    if horizontalDelta == 0 && verticalDelta == 0 {
+      return
+    }
+    
+    trySwap(horizontalDelta: horizontalDelta, verticalDelta: verticalDelta)
+    
+    self.swipeFromColumn = nil
+    self.swipeFromRow    = nil
+  }
+  
   private func positionForTileAt(column: Int, row: Int) -> CGPoint {
     return CGPoint(x: CGFloat(column)*self.tileWidth, y: CGFloat(row)*self.tileHeight)
   }
   
   private func positionForCookieAt(column: Int, row: Int) -> CGPoint {
     return CGPoint(x: CGFloat(column)*self.tileWidth+self.tileWidth/2.0, y: CGFloat(row)*self.tileHeight+self.tileHeight/2.0)
+  }
+  
+  private func convertPoint(point: CGPoint) -> (success: Bool, column: Int, row: Int) {
+    if 0 <= point.x && point.x < CGFloat(numColumns)*self.tileWidth && 0 <= point.y && point.y < CGFloat(numRows)*self.tileHeight {
+      return (true, Int(point.x/self.tileWidth), Int(point.y/self.tileHeight))
+    } else {
+      return (false, 0, 0)
+    }
+  }
+  
+  private func trySwap(horizontalDelta: Int, verticalDelta: Int) {
+    let toColumn = self.swipeFromColumn! + horizontalDelta
+    let toRow    = self.swipeFromRow!    + verticalDelta
+    
+    guard 0 <= toColumn && toColumn < numColumns else {
+      return
+    }
+    
+    guard 0 <= toRow && toRow < numRows else {
+      return
+    }
   }
 }
 
