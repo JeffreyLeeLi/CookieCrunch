@@ -70,6 +70,14 @@ class GameScene: SKScene {
     self.gameLayer.addChild(self.cookieLayer)
   }
   
+  func addSprites(for cookies : Set<Cookie>) {
+    for cookie in cookies {
+      let sprite = SKSpriteNode(imageNamed: cookie.type.spriteName)
+      sprite.size = CGSize(width: tileWidth, height: tileHeight)
+      
+      self.cookieLayer.addChild(sprite)
+    }
+  }
 }
 
 
