@@ -32,6 +32,7 @@ let numColumns = 9
 let numRows    = 9
 
 class Level {
+  private var tiles = Array2D<Tile>(columns: numColumns, rows: numRows)
   private var cookies = Array2D<Cookie>(columns: numColumns, rows: numRows)
   
   func shuffle() -> Set<Cookie> {
@@ -55,5 +56,12 @@ class Level {
     precondition(0 <= row && row < numRows)
     
     return self.cookies[column, row]
+  }
+  
+  func tileAt(column: Int, row: Int) -> Tile? {
+    precondition(0 <= column && column < numColumns)
+    precondition(0 <= row && row < numRows)
+    
+    return self.tiles[column, row]
   }
 }
