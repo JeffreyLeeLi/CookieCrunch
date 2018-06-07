@@ -73,10 +73,16 @@ class GameScene: SKScene {
   func addSprites(for cookies : Set<Cookie>) {
     for cookie in cookies {
       let sprite = SKSpriteNode(imageNamed: cookie.type.spriteName)
+      
       sprite.size = CGSize(width: tileWidth, height: tileHeight)
+      sprite.position = self.positionForCookieAt(column: cookie.column, row: cookie.row)
       
       self.cookieLayer.addChild(sprite)
     }
+  }
+  
+  private func positionForCookieAt(column: Int, row: Int) -> CGPoint {
+    return CGPoint(x: CGFloat(column)*tileWidth+tileWidth/2.0, y: CGFloat(row)*tileHeight+tileHeight/2.0)
   }
 }
 
