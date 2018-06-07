@@ -53,6 +53,9 @@ class GameScene: SKScene {
   let maskLayer = SKNode()
   let cropLayer = SKCropNode()
   
+  private var swipeFromColumn: Int?
+  private var swipeFromRow   : Int?
+  
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder) is not used in this app")
   }
@@ -134,6 +137,26 @@ class GameScene: SKScene {
       
       self.cookieLayer.addChild(sprite)
     }
+  }
+  
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    guard let touch = touches.first else {
+      return
+    }
+    
+    let location = touch.location(in: cookieLayer)
+    let (success, column, row) = self.convertPoint(point: location)
+    
+    if !success {
+      return
+    }
+    
+    if self.level.tileAt(column: column, row: row) == nil {
+      return
+    }
+    
+    self.swipeFromColumn = column
+    self.swipeFromRow    = row
   }
   
   private func positionForTileAt(column: Int, row: Int) -> CGPoint {
