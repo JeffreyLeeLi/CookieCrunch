@@ -63,7 +63,15 @@ class Level {
           continue
         }
         
-        let type = CookieType.random()
+        var type: CookieType
+        repeat {
+          type = CookieType.random()
+        } while(
+          (column >= 2 && self.cookies[column-1, row]?.type == type && self.cookies[column-2, row]?.type == type)
+          ||
+          (row >= 2 && self.cookies[column, row-1]?.type == type && self.cookies[column, row-2]?.type == type)
+        )
+        
         let cookie = Cookie(column: column, row: row, type: type)
         
         self.cookies[column, row] = cookie
