@@ -108,6 +108,17 @@ class GameViewController: UIViewController {
     let cookies = self.level.shuffle()
     self.scene.addSprites(for: cookies)
     
+    self.scene.swipeHandler = handleSwipe
+    
     self.scene.addTiles()
+  }
+  
+  func handleSwipe(swap: Swap) {
+    self.view.isUserInteractionEnabled = false
+    
+    self.level.performSwap(swap: swap)
+    self.scene.animate(swap: swap, completion: {
+      self.view.isUserInteractionEnabled = true
+    })
   }
 }

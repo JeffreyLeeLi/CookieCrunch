@@ -56,6 +56,8 @@ class GameScene: SKScene {
   private var swipeFromColumn: Int?
   private var swipeFromRow   : Int?
   
+  var swipeHandler: ((Swap) -> Void)?
+  
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder) is not used in this app")
   }
@@ -136,6 +138,8 @@ class GameScene: SKScene {
       sprite.position = self.positionForCookieAt(column: cookie.column, row: cookie.row)
       
       self.cookieLayer.addChild(sprite)
+      
+      cookie.sprite = sprite
     }
   }
   
@@ -238,6 +242,36 @@ class GameScene: SKScene {
     guard 0 <= toRow && toRow < numRows else {
       return
     }
+    
+    print("[\(self.swipeFromColumn!), \(self.swipeFromRow!)] -> [\(toColumn), \(toRow)]")
+    
+    if let toCookie = self.level.cookieAt(column: toColumn, row: toRow), let fromCookie = self.level.cookieAt(column: self.swipeFromColumn!, row: self.swipeFromRow!) {
+      print("swapping \(fromCookie) with \(toCookie)")
+      if let handler = self.swipeHandler {
+        let swap = Swap(cookieOne: fromCookie, cookieAnother: toCookie)
+        handler(swap)
+      }
+    }
+  }
+  
+  func animate(swap: Swap, completion: @escaping() -> Void) {
+    let spriteOne     = swap.cookieOne.sprite!
+    let spriteAnother = swap.cookieAnother.sprite!
+    
+    spriteOne.zPosition     = 100
+    spriteAnother.zPosition = 90
+    
+    let duration: TimeInterval = 0.3
+    
+    let moveOne = SKAction.move(to: spriteAnother.position, duration: duration)
+    moveOne.timingMode = .easeOut
+    spriteOne.run(moveOne, completion: completion)
+    
+    let moveAnother = SKAction.move(to: spriteOne.position, duration: duration)
+    moveAnother.timingMode = .easeOut
+    spriteAnother.run(moveAnother, completion: completion)
+    
+    self.run(swapSound)
   }
 }
 

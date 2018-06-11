@@ -74,6 +74,23 @@ class Level {
     return aSet
   }
   
+  func performSwap(swap: Swap) {
+    let columnOne = swap.cookieOne.column
+    let rowOne = swap.cookieOne.row
+    
+    let columnAnother = swap.cookieAnother.column
+    let rowAnother = swap.cookieAnother.row
+    
+    self.cookies[columnOne, rowOne] = swap.cookieAnother
+    self.cookies[columnAnother, rowAnother] = swap.cookieOne
+    
+    swap.cookieOne.column = columnAnother
+    swap.cookieOne.row = rowAnother
+    
+    swap.cookieAnother.column = columnOne
+    swap.cookieAnother.row = rowOne
+  }
+  
   func cookieAt(column: Int, row: Int) -> Cookie? {
     precondition(0 <= column && column < numColumns)
     precondition(0 <= row && row < numRows)
