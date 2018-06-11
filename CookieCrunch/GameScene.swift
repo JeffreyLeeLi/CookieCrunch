@@ -53,6 +53,8 @@ class GameScene: SKScene {
   let maskLayer = SKNode()
   let cropLayer = SKCropNode()
   
+  private var selectedSprite = SKSpriteNode()
+  
   private var swipeFromColumn: Int?
   private var swipeFromRow   : Int?
   
@@ -85,6 +87,26 @@ class GameScene: SKScene {
     self.cropLayer.addChild(self.cookieLayer)
     
     self.cropLayer.maskNode = self.maskLayer
+  }
+  
+  func highlight(cookie: Cookie) {
+    if let sprite = cookie.sprite {
+      let name = cookie.type.highlightedSpriteName
+      let texture = SKTexture(imageNamed: name)
+      
+      self.selectedSprite.size = CGSize(width: self.tileWidth, height: self.tileHeight)
+      self.selectedSprite.run(SKAction.setTexture(texture))
+      self.selectedSprite.alpha = 1.0
+      
+      sprite.addChild(self.selectedSprite)
+    }
+  }
+  
+  func hidelight() {
+    self.selectedSprite.run(SKAction.sequence([
+      SKAction.fadeOut(withDuration: 0.3),
+      SKAction.removeFromParent()
+    ]))
   }
   
   func addTiles() {
@@ -155,12 +177,12 @@ class GameScene: SKScene {
       return
     }
     
-    if self.level.tileAt(column: column, row: row) == nil {
-      return
+    if let cookie = self.level.cookieAt(column: column, row: row) {
+      self.highlight(cookie: cookie)
+      
+      self.swipeFromColumn = column
+      self.swipeFromRow    = row
     }
-    
-    self.swipeFromColumn = column
-    self.swipeFromRow    = row
   }
   
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -201,6 +223,8 @@ class GameScene: SKScene {
     }
     
     trySwap(horizontalDelta: horizontalDelta, verticalDelta: verticalDelta)
+    
+    self.hidelight()
     
     self.swipeFromColumn = nil
     self.swipeFromRow    = nil
