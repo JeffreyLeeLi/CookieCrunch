@@ -267,10 +267,7 @@ class GameScene: SKScene {
       return
     }
     
-    print("[\(self.swipeFromColumn!), \(self.swipeFromRow!)] -> [\(toColumn), \(toRow)]")
-    
     if let toCookie = self.level.cookieAt(column: toColumn, row: toRow), let fromCookie = self.level.cookieAt(column: self.swipeFromColumn!, row: self.swipeFromRow!) {
-      print("swapping \(fromCookie) with \(toCookie)")
       if let handler = self.swipeHandler {
         let swap = Swap(cookieOne: fromCookie, cookieAnother: toCookie)
         handler(swap)
