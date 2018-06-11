@@ -148,7 +148,7 @@ class GameScene: SKScene {
       return
     }
     
-    let location = touch.location(in: cookieLayer)
+    let location = touch.location(in: self.cookieLayer)
     let (success, column, row) = self.convertPoint(point: location)
     
     if !success {
