@@ -27,6 +27,7 @@
 /// THE SOFTWARE.
 
 import Foundation
+import SpriteKit
 
 enum CookieType: Int {
   case unknown = 0, croissant, cupcake, danish, donut, macaroon, sugarCookie
@@ -56,11 +57,17 @@ enum CookieType: Int {
   }
 }
 
-class Cookie: Hashable {
+class Cookie: Hashable, CustomStringConvertible {
   var column: Int
   var row   : Int
   
   let type: CookieType
+  
+  var sprite: SKSpriteNode?
+  
+  var description: String {
+    return "Type: \(self.type) Square: [\(self.column), \(self.row)]"
+  }
   
   init(column: Int, row: Int, type: CookieType) {
     self.column = column
