@@ -54,6 +54,10 @@ class Level {
     }
   }
   
+  func initialSet() -> Set<Cookie> {
+    return self.shuffle();
+  }
+  
   func shuffle() -> Set<Cookie> {
     var aSet: Set<Cookie> = []
     
