@@ -35,6 +35,8 @@ class Level {
   private var tiles = Array2D<Tile>(columns: numColumns, rows: numRows)
   private var cookies = Array2D<Cookie>(columns: numColumns, rows: numRows)
   
+  private var possibleSwaps: Set<Swap> = []
+  
   init(filename: String) {
     guard let data = LevelData.loadFrom(file: filename) else {
       return
@@ -55,7 +57,14 @@ class Level {
   }
   
   func initialSet() -> Set<Cookie> {
-    return self.shuffle();
+    var set: Set<Cookie>
+    
+    repeat {
+      set = self.shuffle()
+      self.detectPossibleSwaps()
+    } while (self.possibleSwaps.count == 0)
+    
+    return set
   }
   
   func shuffle() -> Set<Cookie> {
@@ -84,6 +93,10 @@ class Level {
     }
     
     return aSet
+  }
+  
+  func detectPossibleSwaps() {
+    
   }
   
   func performSwap(swap: Swap) {
