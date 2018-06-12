@@ -28,12 +28,20 @@
 
 import Foundation
 
-struct Swap {
+struct Swap: Hashable {
   let cookieOne    : Cookie
   let cookieAnother: Cookie
   
   init(cookieOne: Cookie, cookieAnother: Cookie) {
     self.cookieOne     = cookieOne
     self.cookieAnother = cookieAnother
+  }
+  
+  var hashValue: Int {
+    return self.cookieOne.hashValue ^ self.cookieAnother.hashValue
+  }
+  
+  static func ==(one: Swap, another: Swap) -> Bool {
+    return (one.cookieOne == another.cookieOne && one.cookieAnother == another.cookieAnother) || (one.cookieOne == another.cookieAnother && one.cookieAnother == another.cookieOne)
   }
 }
