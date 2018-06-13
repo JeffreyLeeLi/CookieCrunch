@@ -67,7 +67,7 @@ class Level {
     return set
   }
   
-  private func cookieHasChainAt(column: Int, row: Int) -> Bool {
+  private func hasChainForCookieAt(column: Int, row: Int) -> Bool {
     let type = self.cookieAt(column: column, row: row)?.type
     
     var horizontalLength = 1
@@ -149,7 +149,7 @@ class Level {
             self.cookies[column, row] = another
             self.cookies[column+1, row] = one
             
-            if self.cookieHasChainAt(column: column, row: row) || self.cookieHasChainAt(column: column+1, row: row) {
+            if self.hasChainForCookieAt(column: column, row: row) || self.hasChainForCookieAt(column: column+1, row: row) {
               aSet.insert(Swap(cookieOne: one, cookieAnother: another))
             }
             
@@ -161,7 +161,7 @@ class Level {
             self.cookies[column, row] = another
             self.cookies[column, row+1] = one
             
-            if self.cookieHasChainAt(column: column, row: row) || self.cookieHasChainAt(column: column, row: row+1) {
+            if self.hasChainForCookieAt(column: column, row: row) || self.hasChainForCookieAt(column: column, row: row+1) {
               aSet.insert(Swap(cookieOne: one, cookieAnother: another))
             }
             
