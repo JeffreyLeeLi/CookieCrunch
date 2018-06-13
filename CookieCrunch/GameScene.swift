@@ -294,6 +294,27 @@ class GameScene: SKScene {
     
     self.run(swapSound)
   }
+  
+  func animateInvalid(swap: Swap, completion: @escaping() -> Void) {
+    let spriteOne     = swap.cookieOne.sprite!
+    let spriteAnother = swap.cookieAnother.sprite!
+    
+    spriteOne.zPosition     = 100
+    spriteAnother.zPosition = 90
+    
+    let duration: TimeInterval = 0.2
+    
+    let moveOne = SKAction.move(to: spriteAnother.position, duration: duration)
+    moveOne.timingMode = .easeOut
+    
+    let moveAnother = SKAction.move(to: spriteOne.position, duration: duration)
+    moveAnother.timingMode = .easeOut
+    
+    spriteOne.run(SKAction.sequence([moveOne, moveAnother]), completion: completion)
+    spriteAnother.run(SKAction.sequence([moveAnother, moveOne]))
+    
+    self.run(invalidSwapSound)
+  }
 }
 
 
