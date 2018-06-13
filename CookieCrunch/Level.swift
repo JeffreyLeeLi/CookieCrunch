@@ -61,7 +61,7 @@ class Level {
     
     repeat {
       set = self.shuffle()
-      self.detectPossibleSwaps()
+      self.possibleSwaps = self.detectPossibleSwaps()
     } while (self.possibleSwaps.count == 0)
     
     return set
@@ -139,8 +139,40 @@ class Level {
     return aSet
   }
   
-  func detectPossibleSwaps() {
+  func detectPossibleSwaps() -> Set<Swap> {
+    var aSet: Set<Swap> = []
     
+    for column in 0..<numColumns {
+      for row in 0..<numRows {
+        if let one = self.cookieAt(column: column, row: row) {
+          if column < numColumns-1, let another = self.cookieAt(column: column+1, row: row) {
+            self.cookies[column, row] = another
+            self.cookies[column+1, row] = one
+            
+            if self.cookieHasChainAt(column: column, row: row) || self.cookieHasChainAt(column: column+1, row: row) {
+              aSet.insert(Swap(cookieOne: one, cookieAnother: another))
+            }
+            
+            self.cookies[column, row] = one
+            self.cookies[column+1, row] = another
+          }
+          
+          if row < numRows-1, let another = self.cookieAt(column: column, row: row+1) {
+            self.cookies[column, row] = another
+            self.cookies[column, row+1] = one
+            
+            if self.cookieHasChainAt(column: column, row: row) || self.cookieHasChainAt(column: column, row: row+1) {
+              aSet.insert(Swap(cookieOne: one, cookieAnother: another))
+            }
+            
+            self.cookies[column, row] = one
+            self.cookies[column, row+1] = another
+          }
+        }
+      }
+    }
+    
+    return aSet
   }
   
   func performSwap(swap: Swap) {
