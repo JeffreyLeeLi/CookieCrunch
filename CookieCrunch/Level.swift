@@ -67,6 +67,50 @@ class Level {
     return set
   }
   
+  private func cookieHasChainAt(column: Int, row: Int) -> Bool {
+    let type = self.cookieAt(column: column, row: row)?.type
+    
+    var horizontalLength = 1
+    var i = 0
+    
+    i = column-1
+    while i >= 0 && self.cookieAt(column: i, row: row)?.type == type {
+      i-=1
+      horizontalLength+=1
+    }
+    
+    i = column+1
+    while i < numColumns && self.cookieAt(column: i, row: row)?.type == type {
+      i+=1
+      horizontalLength+=1
+    }
+    
+    if horizontalLength >= 3 {
+      return true
+    }
+    
+    var verticalLength = 1
+    var j = 0
+    
+    j = row-1
+    while j > 0 && self.cookieAt(column: column, row: j)?.type == type {
+      j-=1
+      verticalLength+=1
+    }
+    
+    j = row+1
+    while j < numRows && self.cookieAt(column: column, row: j)?.type == type {
+      j+=1
+      verticalLength+=1
+    }
+    
+    if verticalLength >= 3 {
+      return true
+    }
+    
+    return false
+  }
+  
   func shuffle() -> Set<Cookie> {
     var aSet: Set<Cookie> = []
     
