@@ -67,6 +67,10 @@ class Level {
     return set
   }
   
+  func isPossible(swap: Swap) -> Bool {
+    return self.possibleSwaps.contains(swap)
+  }
+  
   private func hasChainForCookieAt(column: Int, row: Int) -> Bool {
     let type = self.cookieAt(column: column, row: row)?.type
     
