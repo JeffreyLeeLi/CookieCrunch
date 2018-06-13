@@ -60,7 +60,7 @@ class Level {
     var set: Set<Cookie>
     
     repeat {
-      set = self.shuffle()
+      set = self.generateShuffleCookies()
       self.possibleSwaps = self.detectPossibleSwaps()
     } while (self.possibleSwaps.count == 0)
     
@@ -111,7 +111,7 @@ class Level {
     return false
   }
   
-  func shuffle() -> Set<Cookie> {
+  func generateShuffleCookies() -> Set<Cookie> {
     var aSet: Set<Cookie> = []
     
     for column in 0..<numColumns {
