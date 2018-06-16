@@ -45,4 +45,14 @@ class Chain: Hashable {
   func add(cookie: Cookie) {
     self.cookies.append(cookie)
   }
+  
+  var hashValue: Int {
+    return self.cookies.reduce(0, {
+      $0.hashValue ^ $1.hashValue
+    })
+  }
+  
+  static func ==(one: Chain, another: Chain) -> Bool {
+    return one.cookies == another.cookies
+  }
 }
