@@ -39,4 +39,10 @@ class Chain {
   init(type: Type) {
     self.type = type
   }
+  
+  var cookies: [Cookie] = []
+  
+  func add(cookie: Cookie) {
+    self.cookies.append(Cookie)
+  }
 }
