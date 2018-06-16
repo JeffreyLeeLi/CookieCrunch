@@ -244,6 +244,16 @@ class Level {
     return aSet
   }
   
+  private func removeCookies(in chains: Set<Chain>) {
+    for chain in chains {
+      for cookie in chain.cookies {
+        let column = cookie.column
+        let row = cookie.row
+        self.cookies[column, row] = nil
+      }
+    }
+  }
+  
   func performSwap(swap: Swap) {
     let columnOne = swap.cookieOne.column
     let rowOne = swap.cookieOne.row
