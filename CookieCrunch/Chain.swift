@@ -33,4 +33,10 @@ class Chain {
     case horizontal
     case vertical
   }
+  
+  var type: Type
+  
+  init(type: Type) {
+    self.type = type
+  }
 }
