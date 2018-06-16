@@ -28,15 +28,15 @@
 
 import Foundation
 
-class Chain {
-  enum Type {
+class Chain: Hashable {
+  enum ChainType {
     case horizontal
     case vertical
   }
   
-  var type: Type
+  var type: ChainType
   
-  init(type: Type) {
+  init(type: ChainType) {
     self.type = type
   }
   
