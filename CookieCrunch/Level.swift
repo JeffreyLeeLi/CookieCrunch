@@ -179,6 +179,35 @@ class Level {
     return aSet
   }
   
+  private func detectHorizontalChains() -> Set<Chain> {
+    var aSet: Set<Chain> = []
+    
+    for row in 0..<numRows {
+      var column = 0
+      while column < numColumns-2 {
+        if let cookie = self.cookieAt(column: column, row: row) {
+          let type = cookie.type
+          
+          if self.cookieAt(column: column+1, row: row)?.type == type && self.cookieAt(column: column+2, row: row)?.type == type {
+            let chain = Chain(type: .horizontal)
+            column+=1
+            repeat {
+              chain.add(cookie: cookie)
+            } while column < numColumns && self.cookieAt(column: column, row: row)?.type == type
+            
+            aSet.insert(chain)
+            
+            continue
+          }
+        }
+        
+        column+=1
+      }
+    }
+    
+    return aSet
+  }
+  
   func performSwap(swap: Swap) {
     let columnOne = swap.cookieOne.column
     let rowOne = swap.cookieOne.row
