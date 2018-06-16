@@ -208,6 +208,35 @@ class Level {
     return aSet
   }
   
+  private func detectVerticalChains() -> Set<Chain> {
+    var aSet: Set<Chain> = []
+    
+    for column in 0..<numColumns {
+      var row = 0
+      while row < numRows-2 {
+        if let cookie = self.cookieAt(column: column, row: row) {
+          let type = cookie.type
+          
+          if self.cookieAt(column: column, row: row+1)?.type == type && self.cookieAt(column: column, row: row+2)?.type == type {
+            let chain = Chain(type: .horizontal)
+            row+=1
+            repeat {
+              chain.add(cookie: cookie)
+            } while row < numRows && self.cookieAt(column: column, row: row)?.type == type
+            
+            aSet.insert(chain)
+            
+            continue
+          }
+        }
+        
+        row+=1
+      }
+    }
+    
+    return aSet
+  }
+  
   func performSwap(swap: Swap) {
     let columnOne = swap.cookieOne.column
     let rowOne = swap.cookieOne.row
