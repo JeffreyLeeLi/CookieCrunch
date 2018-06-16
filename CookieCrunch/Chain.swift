@@ -43,6 +43,6 @@ class Chain: Hashable {
   var cookies: [Cookie] = []
   
   func add(cookie: Cookie) {
-    self.cookies.append(Cookie)
+    self.cookies.append(cookie)
   }
 }
