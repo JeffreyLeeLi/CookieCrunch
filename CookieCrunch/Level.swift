@@ -179,7 +179,7 @@ class Level {
     return aSet
   }
   
-  private func detectAllChains() -> Set<Chain> {
+  func detectAllChains() -> Set<Chain> {
     let horizontalChains = self.detectHorizontalChains()
     let verticalChains = self.detectVerticalChains()
     

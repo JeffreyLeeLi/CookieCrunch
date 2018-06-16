@@ -120,11 +120,16 @@ class GameViewController: UIViewController {
       self.level.performSwap(swap: swap)
       self.scene.animate(swap: swap, completion: {
         self.view.isUserInteractionEnabled = true
+        self.handleMatches()
       })
     } else {
       self.scene.animateInvalid(swap: swap, completion: {
         self.view.isUserInteractionEnabled = true
       })
     }
+  }
+  
+  func handleMatches() {
+    let chains = self.level.detectAllChains()
   }
 }
