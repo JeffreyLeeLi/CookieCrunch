@@ -27,3 +27,10 @@
 /// THE SOFTWARE.
 
 import Foundation
+
+class Chain {
+  enum Type {
+    case horizontal
+    case vertical
+  }
+}
