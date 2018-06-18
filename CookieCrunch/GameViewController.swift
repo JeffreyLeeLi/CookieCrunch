@@ -131,6 +131,11 @@ class GameViewController: UIViewController {
   
   func handleMatches() {
     let chains = self.level.detectAllChains()
+
+    self.scene.animateCookiesIn(chains: chains, completion: {
+      self.view.isUserInteractionEnabled = true
+    })
+    
     self.level.removeCookies(in: chains)
   }
 }
