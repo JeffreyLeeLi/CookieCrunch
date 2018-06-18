@@ -207,9 +207,9 @@ class Level {
           
           if self.cookieAt(column: column+1, row: row)?.type == type && self.cookieAt(column: column+2, row: row)?.type == type {
             let chain = Chain(type: .horizontal)
-            column+=1
             repeat {
               chain.add(cookie: cookie)
+              column+=1
             } while column < numColumns && self.cookieAt(column: column, row: row)?.type == type
             
             aSet.insert(chain)
@@ -236,9 +236,9 @@ class Level {
           
           if self.cookieAt(column: column, row: row+1)?.type == type && self.cookieAt(column: column, row: row+2)?.type == type {
             let chain = Chain(type: .horizontal)
-            row+=1
             repeat {
               chain.add(cookie: cookie)
+              row+=1
             } while row < numRows && self.cookieAt(column: column, row: row)?.type == type
             
             aSet.insert(chain)
