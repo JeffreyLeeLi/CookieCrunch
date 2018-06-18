@@ -275,7 +275,7 @@ class GameScene: SKScene {
     }
   }
   
-  func animate(swap: Swap, completion: @escaping() -> Void) {
+  func animateValid(swap: Swap, completion: @escaping() -> Void) {
     let spriteOne     = swap.cookieOne.sprite!
     let spriteAnother = swap.cookieAnother.sprite!
     
