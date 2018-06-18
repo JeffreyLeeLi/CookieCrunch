@@ -179,6 +179,16 @@ class Level {
     return aSet
   }
   
+  func removeCookies(in chains: Set<Chain>) {
+    for chain in chains {
+      for cookie in chain.cookies {
+        let column = cookie.column
+        let row = cookie.row
+        self.cookies[column, row] = nil
+      }
+    }
+  }
+  
   func detectAllChains() -> Set<Chain> {
     let horizontalChains = self.detectHorizontalChains()
     let verticalChains = self.detectVerticalChains()
@@ -242,16 +252,6 @@ class Level {
     }
     
     return aSet
-  }
-  
-  private func removeCookies(in chains: Set<Chain>) {
-    for chain in chains {
-      for cookie in chain.cookies {
-        let column = cookie.column
-        let row = cookie.row
-        self.cookies[column, row] = nil
-      }
-    }
   }
   
   func performSwap(swap: Swap) {

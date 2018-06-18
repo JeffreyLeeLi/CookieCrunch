@@ -131,5 +131,6 @@ class GameViewController: UIViewController {
   
   func handleMatches() {
     let chains = self.level.detectAllChains()
+    self.level.removeCookies(in: chains)
   }
 }
