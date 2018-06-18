@@ -118,10 +118,7 @@ class GameViewController: UIViewController {
     
     if self.level.isPossible(swap: swap) {
       self.level.performSwap(swap: swap)
-      self.scene.animateValid(swap: swap, completion: {
-        self.view.isUserInteractionEnabled = true
-        self.handleMatches()
-      })
+      self.scene.animateValid(swap: swap, completion: handleMatches)
     } else {
       self.scene.animateInvalid(swap: swap, completion: {
         self.view.isUserInteractionEnabled = true
